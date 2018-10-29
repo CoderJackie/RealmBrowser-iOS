@@ -35,7 +35,8 @@
 #import "RLMBrowserRealm.h"
 #import "RLMBrowserSchema.h"
 
-#import "RLMObject+JSONSerialization.h"
+#import "RLMObject+JSON.h"
+#import <TOSplitViewController/TOSplitViewController.h>
 
 typedef NS_ENUM(NSInteger, RLMBrowserQuickLookContentType) {
     RLMBrowserQuickLookContentTypeNone,
@@ -223,11 +224,23 @@ const NSInteger kRLMBrowserObjectViewTag = 101;
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if (cell == nil) { return; }
-
-    RLMBrowserObjectContentView *contentView = (RLMBrowserObjectContentView *)[cell viewWithTag:kRLMBrowserObjectViewTag];
-    if (contentView == nil) { return; }
-
-    [contentView showCopyButton];
+    RLMProperty *property = self.realmObject.objectSchema.properties[indexPath.row];
+    if (property.type == RLMPropertyTypeObject) {
+        NSString *className = property.objectClassName;
+        id obj = [self.realmObject valueForKey:property.name];
+        
+        if ([obj isKindOfClass:[RLMObject class]] && [className isEqualToString:((RLMObject *)obj).objectSchema.className]) {
+            RLMBrowserObjectViewController *objectController = [[RLMBrowserObjectViewController alloc] initWithObject:obj
+                                                                                                      forBrowserRealm:self.browserRealm
+                                                                                                        browserSchema:self.browserSchema];
+            [self.navigationController pushViewController:objectController animated:YES];
+        }
+        return;
+    }
+        RLMBrowserObjectContentView *contentView = (RLMBrowserObjectContentView *)[cell viewWithTag:kRLMBrowserObjectViewTag];
+        if (contentView == nil) { return; }
+        
+        [contentView showCopyButton];
 }
 
 #pragma mark - Button Callbacks -
@@ -235,9 +248,9 @@ const NSInteger kRLMBrowserObjectViewTag = 101;
 {
     // Convert the Realm object to a JSON serializable dictionary
     NSError *error = nil;
-    NSString *JSONString = [self.realmObject RLMBrowser_toJSONStringWithError:&error];
+    NSString *JSONString = [self.realmObject JSONString];
 
-    if (error) {
+    if (!JSONString) {
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"Unable to Generate JSON" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
         [controller addAction:[UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:nil]];
         [self presentViewController:controller animated:YES completion:nil];
