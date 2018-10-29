@@ -1,26 +1,31 @@
 PODS:
-  - Realm (3.0.1):
-    - Realm/Headers (= 3.0.1)
-  - Realm/Headers (3.0.1)
-  - Reveal-SDK (11)
+  - Realm (3.7.5):
+    - Realm/Headers (= 3.7.5)
+  - Realm/Headers (3.7.5)
+  - RealmBrowserKit (0.0.1):
+    - Realm
+    - TODocumentPickerViewController
+    - TORoundedTableView
+    - TOSplitViewController
   - TODocumentPickerViewController (0.1.1)
   - TORoundedTableView (0.1.3)
-  - TOSplitViewController (0.0.4)
+  - TOSplitViewController (0.0.5)
 
 DEPENDENCIES:
-  - Realm
-  - Reveal-SDK
-  - TODocumentPickerViewController
-  - TORoundedTableView
-  - TOSplitViewController
+  - Realm (= 3.7.5)
+  - RealmBrowserKit (from `./RealmBrowserKit.podspec`)
+
+EXTERNAL SOURCES:
+  RealmBrowserKit:
+    :path: ./RealmBrowserKit.podspec
 
 SPEC CHECKSUMS:
-  Realm: ba6144c74f835f7497791f6599d63a7755377b83
-  Reveal-SDK: 7fa13d04bb55db61ff2342a990cf731d5159361d
+  Realm: c286caf4dbf346ce24aad49ca76c7ce622d4a082
+  RealmBrowserKit: d3aec12a9048371178754553986efa6481bb5cde
   TODocumentPickerViewController: 563d97ad8d8014e6b30245e31bf4248f2778c0fb
   TORoundedTableView: cd1437ef81ab3888dea8c06d2dfe4795bcaac768
-  TOSplitViewController: 3d59b95c3e09511cc4540bc05d1db6a7d3289eed
+  TOSplitViewController: 4a1884c97955d75ab2b64b07f44533ceef871498
 
-PODFILE CHECKSUM: 73bd022f55ad8773d55b5f8c894666d07783aa35
+PODFILE CHECKSUM: fdc5c29b0dde8e5d5ad973c3f1c84d2f5d0dff9b
 
-COCOAPODS: 1.4.0.beta.2
+COCOAPODS: 1.3.1

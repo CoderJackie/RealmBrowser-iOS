@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "RLMRealmLogoView.h"
+#import <RealmBrowserKit/RLMRealmLogoView.h>
 #import "RLMBrowserViewController.h"
 
 @interface ViewController ()
