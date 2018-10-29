@@ -151,7 +151,12 @@ const NSInteger kRLMBrowserRealmViewTag = 101;
 
 - (void)actionButtonTapped:(id)sender
 {
-
+    NSURL *fileUrl = [NSURL fileURLWithPath:self.browserRealm.absoluteFilePath];
+    // Show the activity controller
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[fileUrl] applicationActivities:nil];
+    activityController.modalPresentationStyle = UIModalPresentationPopover;
+    activityController.popoverPresentationController.barButtonItem = sender;
+    [self presentViewController:activityController animated:YES completion:nil];
 }
 
 - (void)favoriteButtonTapped:(id)sender
